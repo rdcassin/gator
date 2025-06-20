@@ -17,6 +17,7 @@ function validateConfig(rawConfig: any) {
   if (!rawConfig.db_url || typeof rawConfig.db_url !== "string") {
     throw new Error("db_url is required and needs to be a string");
   }
+  
   return {
     dbUrl: rawConfig.db_url,
     currentUserName: rawConfig.current_user_name ?? "",
