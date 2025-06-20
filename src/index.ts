@@ -4,26 +4,28 @@ import {
     registerCommand,
     runCommand,
 } from "./commands/commands";
-import { handlerLogin } from "./commands/users";
+import { handlerLogin, handlerRegister } from "./commands/users";
 
-function main() {
+async function main() {
     const cfg = readConfig();
     const commandRegistry: CommandsRegistry = {};
     registerCommand(commandRegistry, "login", handlerLogin);
+    registerCommand(commandRegistry, "register", handlerRegister);
 
     if (process.argv.length <= 2) {
-        console.log("No command received");
+        console.log("no command received");
         process.exit(1);
     }
     const userInput = process.argv.slice(2);
     const cmdName = userInput[0];
     const args = userInput.slice(1);
     try {
-        runCommand(commandRegistry, cmdName, ...args);
+        await runCommand(commandRegistry, cmdName, ...args);
     } catch (err) {
         console.log((err as Error).message);
         process.exit(1);
     }
+    process.exit(0);
 }
 
 main();
