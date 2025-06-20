@@ -1,6 +1,6 @@
 import { readConfig } from "./config";
 import {
-    type CommandsRegistry,
+    CommandsRegistry,
     registerCommand,
     runCommand,
 } from "./commands/commands";
