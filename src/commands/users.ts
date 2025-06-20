@@ -16,16 +16,16 @@ export async function handlerLogin(cmdName: string, ...args: string[]) {
 }
 
 export async function handlerRegister(cmdName: string, ...args: string[]) {
-    if (args.length !== 1) {
-        throw new Error(`usage: ${cmdName} <Username>`);
-    }
+  if (args.length !== 1) {
+    throw new Error(`usage: ${cmdName} <Username>`);
+  }
 
-    const name = args[0];
-    const existingUser = await getUser(name);
-    if (existingUser) {
-        throw new Error(`user ${existingUser.name} already exists`);
-    }
-    const newUser = await createUser(name);
-    setUser(newUser.name);
-    console.log("created new user", newUser);
+  const name = args[0];
+  const existingUser = await getUser(name);
+  if (existingUser) {
+    throw new Error(`user ${existingUser.name} already exists`);
+  }
+  const newUser = await createUser(name);
+  setUser(newUser.name);
+  console.log("created new user", newUser);
 }
