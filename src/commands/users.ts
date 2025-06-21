@@ -35,6 +35,8 @@ export async function handlerListUsers() {
 
   const currentUser = readConfig().currentUserName;
   for (const user of allUsers) {
-    console.log(`* ${user.name}${user.name === currentUser ? " (current)" : ""}`);
-  };
+    console.log(
+      `* ${user.name}${user.name === currentUser ? " (current)" : ""}`
+    );
+  }
 }
