@@ -21,11 +21,10 @@ export async function handlerRegister(cmdName: string, ...args: string[]) {
   }
 
   const userName = args[0];
-  const existingUser = await getUser(userName);
-  if (existingUser) {
-    throw new Error(`user ${existingUser.name} already exists`);
-  }
   const newUser = await createUser(userName);
+  if (!newUser) {
+    throw new Error(`user ${userName} already exists`);
+  }
   setUser(newUser.name);
   console.log("created new user", newUser.name);
 }

@@ -16,8 +16,8 @@ type RSSItem = {
   pubDate: string;
 };
 
-export async function fetchFeed(feedURL: string): Promise<RSSFeed> {
-  const res = await fetch(feedURL, {
+export async function fetchFeed(feedUrl: string): Promise<RSSFeed> {
+  const res = await fetch(feedUrl, {
     method: "GET",
     mode: "cors",
     headers: {

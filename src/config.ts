@@ -7,9 +7,9 @@ export type Config = {
   currentUserName: string;
 };
 
-export function setUser(username: string) {
+export function setUser(userName: string) {
   const config = readConfig();
-  config.currentUserName = username;
+  config.currentUserName = userName;
   writeConfig(config);
 }
 
