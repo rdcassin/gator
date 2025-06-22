@@ -6,7 +6,7 @@ import {
 } from "./commands/commands";
 import { handlerLogin, handlerRegister, handlerListUsers } from "./commands/users";
 import { handlerAggregate } from "./commands/aggregate";
-import { addFeed } from "./commands/feeds";
+import { handlerAddFeed, handlerListFeeds } from "./commands/feeds";
 
 import { handlerReset } from "./commands/reset";
 
@@ -17,7 +17,8 @@ async function main() {
   registerCommand(commandRegistry, "register", handlerRegister);
   registerCommand(commandRegistry, "users", handlerListUsers);
   registerCommand(commandRegistry, "agg", handlerAggregate);
-  registerCommand(commandRegistry, "addfeed", addFeed);
+  registerCommand(commandRegistry, "addfeed", handlerAddFeed);
+  registerCommand(commandRegistry, "feeds", handlerListFeeds);
 
   registerCommand(commandRegistry, "reset", handlerReset);
 
