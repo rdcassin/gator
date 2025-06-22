@@ -6,10 +6,10 @@ export async function handlerLogin(cmdName: string, ...args: string[]) {
     throw new Error(`usage: ${cmdName} <Username>`);
   }
 
-  const name = args[0];
-  const existingUser = await getUser(name);
+  const userName = args[0];
+  const existingUser = await getUser(userName);
   if (!existingUser) {
-    throw new Error(`user ${name} does not exist... please register user`);
+    throw new Error(`user ${userName} does not exist... please register user`);
   }
   setUser(existingUser.name);
   console.log(`Username set to ${existingUser.name}`);
@@ -20,14 +20,14 @@ export async function handlerRegister(cmdName: string, ...args: string[]) {
     throw new Error(`usage: ${cmdName} <Username>`);
   }
 
-  const name = args[0];
-  const existingUser = await getUser(name);
+  const userName = args[0];
+  const existingUser = await getUser(userName);
   if (existingUser) {
     throw new Error(`user ${existingUser.name} already exists`);
   }
-  const newUser = await createUser(name);
+  const newUser = await createUser(userName);
   setUser(newUser.name);
-  console.log("created new user", newUser);
+  console.log("created new user", newUser.name);
 }
 
 export async function handlerListUsers() {
