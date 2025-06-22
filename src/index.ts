@@ -4,6 +4,7 @@ import {
   registerCommand,
   runCommand,
 } from "./commands/commands";
+import { middlewareLoggedIn } from "./lib/db/middleware/loggedIn";
 import { handlerLogin, handlerRegister, handlerListUsers } from "./commands/users";
 import { handlerAggregate } from "./commands/aggregate";
 import { handlerAddFeed, handlerListFeeds } from "./commands/feeds";
@@ -18,10 +19,10 @@ async function main() {
   registerCommand(commandRegistry, "register", handlerRegister);
   registerCommand(commandRegistry, "users", handlerListUsers);
   registerCommand(commandRegistry, "agg", handlerAggregate);
-  registerCommand(commandRegistry, "addfeed", handlerAddFeed);
+  registerCommand(commandRegistry, "addfeed", middlewareLoggedIn(handlerAddFeed));
   registerCommand(commandRegistry, "feeds", handlerListFeeds);
-  registerCommand(commandRegistry, "follow", handlerFollow);
-  registerCommand(commandRegistry, "following", handlerListFollows);
+  registerCommand(commandRegistry, "follow", middlewareLoggedIn(handlerFollow));
+  registerCommand(commandRegistry, "following", middlewareLoggedIn(handlerListFollows));
 
   registerCommand(commandRegistry, "reset", handlerReset);
 
