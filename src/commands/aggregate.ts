@@ -10,7 +10,7 @@ export async function handlerAggregate(cmdName: string, ...args: string[]) {
   const time = args[0];
   const refreshInterval = parseDuration(time);
   if (!refreshInterval) {
-    throw new Error(`TimeDuractionAndUnit should be in XXh YYm ZZs or AAms`);
+    throw new Error(`TimeDurationAndUnit should be in XXh YYm ZZs or AAms`);
   }
 
   console.log(`Collecting feeds every ${time}...`);
