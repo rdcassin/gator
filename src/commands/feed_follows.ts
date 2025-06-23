@@ -1,11 +1,16 @@
 import {
   createFeedFollow,
+  deleteFeedFollow,
   getFeedFollowsForUser,
 } from "src/lib/db/queries/feed_follow";
 import { getFeedByUrl } from "src/lib/db/queries/feeds";
 import { User } from "src/lib/db/schema";
 
-export async function handlerFollow(cmdName: string, user: User, ...args: string[]) {
+export async function handlerFollow(
+  cmdName: string,
+  user: User,
+  ...args: string[]
+) {
   if (args.length !== 1) {
     throw new Error(`usage: ${cmdName} <FeedUrl>`);
   }
@@ -24,7 +29,11 @@ export async function handlerFollow(cmdName: string, user: User, ...args: string
   console.log(`${user.name} is now following ${feedFollow.feedName}`);
 }
 
-export async function handlerListFollows(_cmdName: string, user: User, ..._args: string[]) {
+export async function handlerListFollows(
+  _cmdName: string,
+  user: User,
+  ..._args: string[]
+) {
   const userId = user.id;
 
   const allFollows = await getFeedFollowsForUser(userId);
@@ -38,4 +47,25 @@ export async function handlerListFollows(_cmdName: string, user: User, ..._args:
     }
     console.log("================================");
   }
+}
+
+export async function handlerUnfollow(
+  cmdName: string,
+  user: User,
+  ...args: string[]
+) {
+  if (args.length !== 1) {
+    throw new Error(`usage: ${cmdName} <FeedUrl>`);
+  }
+
+  const userId = user.id;
+  const url = args[0];
+  const feed = await getFeedByUrl(url);
+  if (!feed) {
+    throw new Error("feed does not exist... cannot unfollow");
+  }
+  const feedId = feed.id;
+
+  const deletedFeed = await deleteFeedFollow(userId, feedId);
+  console.log(`${user.name} is no longer following ${feed.url}`);
 }

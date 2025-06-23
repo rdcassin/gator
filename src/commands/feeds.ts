@@ -3,7 +3,11 @@ import { createFeed, getFeeds } from "src/lib/db/queries/feeds";
 import { getUserById } from "src/lib/db/queries/users";
 import { Feed, User } from "src/lib/db/schema";
 
-export async function handlerAddFeed(cmdName: string, user: User, ...args: string[]) {
+export async function handlerAddFeed(
+  cmdName: string,
+  user: User,
+  ...args: string[]
+) {
   if (args.length !== 2) {
     throw new Error(`usage: ${cmdName} <NameOfFeed> <FeedUrl>`);
   }
