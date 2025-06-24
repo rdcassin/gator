@@ -1,5 +1,6 @@
 import { setUser, readConfig } from "src/config";
 import { createUser, getUser, getUsers } from "src/lib/db/queries/users";
+import { User } from "src/lib/db/schema";
 
 export async function handlerLogin(cmdName: string, ...args: string[]) {
   if (args.length !== 1) {
@@ -29,7 +30,7 @@ export async function handlerRegister(cmdName: string, ...args: string[]) {
   console.log("created new user", newUser.name);
 }
 
-export async function handlerListUsers() {
+export async function handlerListUsers(_cmdName: string, _user: User, ..._args: string[]) {
   const allUsers = await getUsers();
 
   const currentUser = readConfig().currentUserName;

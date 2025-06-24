@@ -2,12 +2,13 @@ import { pgTable, timestamp, uuid, text, unique } from "drizzle-orm/pg-core";
 
 export type Feed = typeof feeds.$inferSelect;
 export type User = typeof users.$inferSelect;
-export type FeedFollows = typeof feedFollows.$inferSelect;
+export type FeedFollows = typeof feed_follows.$inferSelect;
+export type Posts = typeof posts.$inferSelect;
 
 export const users = pgTable("users", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at")
+  created_at: timestamp("created_at").notNull().defaultNow(),
+  updated_at: timestamp("updated_at")
     .notNull()
     .defaultNow()
     .$onUpdate(() => new Date()),
@@ -16,8 +17,8 @@ export const users = pgTable("users", {
 
 export const feeds = pgTable("feeds", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at")
+  created_at: timestamp("created_at").notNull().defaultNow(),
+  updated_at: timestamp("updated_at")
     .notNull()
     .defaultNow()
     .$onUpdate(() => new Date()),
@@ -29,19 +30,37 @@ export const feeds = pgTable("feeds", {
   last_fetched_at: timestamp("last_fetched_at"),
 });
 
-export const feedFollows = pgTable("feed_follows", {
+export const feed_follows = pgTable(
+  "feed_follows",
+  {
+    id: uuid("id").primaryKey().defaultRandom().notNull(),
+    created_at: timestamp("created_at").notNull().defaultNow(),
+    updated_at: timestamp("updated_at")
+      .notNull()
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+    user_id: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    feed_id: uuid("feed_id")
+      .notNull()
+      .references(() => feeds.id, { onDelete: "cascade" }),
+  },
+  (t) => [unique().on(t.user_id, t.feed_id)]
+);
+
+export const posts = pgTable("posts", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at")
+  created_at: timestamp("created_at").notNull().defaultNow(),
+  updated_at: timestamp("updated_at")
     .notNull()
     .defaultNow()
     .$onUpdate(() => new Date()),
-  user_id: uuid("user_id")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
+  title: text("title"),
+  url: text("url").notNull().unique(),
+  description: text("description"),
+  published_at: timestamp("published_at"),
   feed_id: uuid("feed_id")
     .notNull()
     .references(() => feeds.id, { onDelete: "cascade" }),
-},
-(t) => [unique().on(t.user_id, t.feed_id)]
-);
+});

@@ -24,8 +24,9 @@ export async function getFeedByUrl(url: string) {
 export async function markFeedFetched(feed_id: string) {
   const result = await db
     .update(feeds)
-    .set({ updatedAt: new Date(), last_fetched_at: new Date() })
-    .where(eq(feeds.id, feed_id));
+    .set({ updated_at: new Date(), last_fetched_at: new Date() })
+    .where(eq(feeds.id, feed_id))
+    .returning();
   return singleItemOrUndefined(result);
 }
 
