@@ -12,8 +12,8 @@ A command-line RSS feed aggregator that helps you stay up to date with your favo
 
 1.  **Clone this repository:**
     ```bash
-    git clone [https://github.com/your-username/gator-cli.git](https://github.com/your-username/gator-cli.git) # Replace with your repo URL
-    cd gator-cli
+    git clone https://github.com/rdcassin/gator-ts.git
+    cd gator-ts
     ```
 2.  **Install dependencies:**
     ```bash
